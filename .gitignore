@@ -3,6 +3,9 @@
 #
 # Binaries for programs and plugins
 *.exe
+*.pem
+*.swp
+config/
 *.exe~
 *.dll
 *.so
