@@ -11,13 +11,13 @@ set:
   path: /System
   file: ./config/int_desc_update.json
 replace:
-  #path: /System/bgp-items
-  #file: ./config/bgp_items.json
-  path: /System
-  file: ./config/system.json
+  path: /System/bgp-items
+  file: ./config/bgp_items.json
+  #path: /System
+  #file: ./config/system.json
 subscriptions:
-  #- path: /interfaces/interface/state/oper-status
-    #mode: ON_CHANGE
-  - path: /syslog/message
-    origin: Syslog-oper
+  - path: /interfaces/interface/state/oper-status
     mode: ON_CHANGE
+  #- path: /syslog/message
+    #origin: Syslog-oper
+    #mode: ON_CHANGE
