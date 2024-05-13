@@ -3,8 +3,6 @@ module github.com/dsx1123/gnmi_go
 go 1.21.1
 
 require (
-	github.com/golang/glog v1.2.1
-	github.com/golang/protobuf v1.5.4
 	github.com/google/gnxi v0.0.0-20231031154548-557d8e211020
 	github.com/mcuadros/go-defaults v1.2.0
 	github.com/openconfig/gnmi v0.11.0
