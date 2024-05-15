@@ -158,15 +158,17 @@ func (a *App) gNMIGet() error {
 		return fmt.Errorf("Failed to get path %s from target: %s, %v", a.Target.Config.GetPath, a.Target.Client.Address, err)
 	}
 	output := new(utils.Output)
+	output.Value = make(map[string]interface{})
 
 	for _, n := range response.GetNotification() {
 		for _, update := range n.GetUpdate() {
 			xpath := utils.GetXPath(update.GetPath())
+
 			val := update.GetVal().GetJsonVal()
 			output.Path = xpath
 			err := json.Unmarshal(val, &output.Value)
 			if err != nil {
-				log.Fatalf("Failed to Umarshal JSON: %s", val)
+				output.Value["val"] = string(val)
 			}
 			mapJson, _ := json.Marshal(output)
 			log.Printf("Get Response: \n %s \n", utils.PrettyJSON(&mapJson))

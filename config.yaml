@@ -6,7 +6,7 @@ tls_ca: ca-chain.cert.pem
 tls_cert: user_shdu_chain.cert.pem
 tls_key: user_shdu.key.unenc.pem
 encoding: PROTO
-get: /interfaces/interface[name=eth1/1]/state/counters
+get: /interfaces/interface[name=eth1/1]/state
 set:
   path: /System
   file: ./config/int_desc_update.json
