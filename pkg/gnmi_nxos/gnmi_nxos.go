@@ -32,7 +32,11 @@ type Subscription struct {
 	Interval int // Interval in second
 }
 
-func NewNXOSGNMIClient(ctx context.Context, addr string, opts ...grpc.DialOption) (*NXOSGNMIClient, error) {
+func NewNXOSGNMIClient(
+	ctx context.Context,
+	addr string,
+	opts ...grpc.DialOption,
+) (*NXOSGNMIClient, error) {
 	c := new(NXOSGNMIClient)
 	c.opts = &opts
 
@@ -47,6 +51,7 @@ func NewNXOSGNMIClient(ctx context.Context, addr string, opts ...grpc.DialOption
 }
 
 func (c *NXOSGNMIClient) GetCapbilites(ctx context.Context) (*gnmi.CapabilityResponse, error) {
+	// Get the capabilities of the target
 	response, err := c.GNMIClient.Capabilities(ctx, &gnmi.CapabilityRequest{})
 	if err != nil {
 		return nil, err
@@ -54,7 +59,12 @@ func (c *NXOSGNMIClient) GetCapbilites(ctx context.Context) (*gnmi.CapabilityRes
 	return response, nil
 }
 
-func (c *NXOSGNMIClient) Get(ctx context.Context, path string, encoding gnmi.Encoding) (*gnmi.GetResponse, error) {
+func (c *NXOSGNMIClient) Get(
+	ctx context.Context,
+	path string,
+	encoding gnmi.Encoding,
+) (*gnmi.GetResponse, error) {
+	// Get the data from the target with given path
 	_, pElem, err := utils.ParsePath(path)
 	if err != nil {
 		return nil, fmt.Errorf("Parse xpath error: %s", err)
@@ -76,7 +86,12 @@ func (c *NXOSGNMIClient) Get(ctx context.Context, path string, encoding gnmi.Enc
 
 }
 
-func (c *NXOSGNMIClient) Set(ctx context.Context, path string, value *gnmi.TypedValue, opt action.SubOptValue) (*gnmi.SetResponse, error) {
+func (c *NXOSGNMIClient) Set(
+	ctx context.Context,
+	path string,
+	value *gnmi.TypedValue,
+	opt action.SubOptValue,
+) (*gnmi.SetResponse, error) {
 	_, pElem, err := utils.ParsePath(path)
 	if err != nil {
 		return nil, fmt.Errorf("Parse xpath error: %s", err)
@@ -97,7 +112,6 @@ func (c *NXOSGNMIClient) Set(ctx context.Context, path string, value *gnmi.Typed
 		setRequest = &gnmi.SetRequest{
 			Replace: updatePathList,
 		}
-
 	}
 	response, err := c.GNMIClient.Set(ctx, setRequest)
 	if err != nil {
@@ -106,8 +120,14 @@ func (c *NXOSGNMIClient) Set(ctx context.Context, path string, value *gnmi.Typed
 	return response, nil
 }
 
-func (c *NXOSGNMIClient) Subscribe(ctx context.Context, subscriptions []*gnmi.Subscription, encoding gnmi.Encoding) error {
+func (c *NXOSGNMIClient) Subscribe(
+	ctx context.Context,
+	subscriptions []*gnmi.Subscription,
+	encoding gnmi.Encoding,
+) error {
+	// Set up a client to stream the responses
 	subMode := gnmi.SubscriptionList_STREAM
+
 	subRequest := &gnmi.SubscribeRequest{
 		Request: &gnmi.SubscribeRequest_Subscribe{
 			Subscribe: &gnmi.SubscriptionList{
