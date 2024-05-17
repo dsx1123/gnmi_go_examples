@@ -52,6 +52,7 @@ func (t *Target) stream(subscribeClient gnmi.GNMI_SubscribeClient, act action.Op
 		}
 	}
 }
+
 func (t *Target) waitForCondition(subscribeClient gnmi.GNMI_SubscribeClient) (bool, error) {
 	for {
 		res, err := subscribeClient.Recv()
@@ -168,7 +169,12 @@ func (t *Target) Get(ctx context.Context, path string, encoding string) (*gnmi.G
 	return response, nil
 }
 
-func (t *Target) Set(ctx context.Context, path string, value *[]byte, opt action.SubOptValue) (*gnmi.SetResponse, error) {
+func (t *Target) Set(
+	ctx context.Context,
+	path string,
+	value *[]byte,
+	opt action.SubOptValue,
+) (*gnmi.SetResponse, error) {
 	val := &gnmi.TypedValue{
 		Value: &gnmi.TypedValue_JsonVal{
 			JsonVal: *value,
@@ -181,7 +187,11 @@ func (t *Target) Set(ctx context.Context, path string, value *[]byte, opt action
 	return response, nil
 }
 
-func (t *Target) Subscribe(ctx context.Context, subscriptions *config.Subscriptions, encoding string) error {
+func (t *Target) Subscribe(
+	ctx context.Context,
+	subscriptions *config.Subscriptions,
+	encoding string,
+) error {
 	gEncoding := gnmi.Encoding(gnmi.Encoding_value[encoding])
 	gnmiSubs, err := GetSubscriptionList(subscriptions)
 	if err != nil {

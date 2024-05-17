@@ -50,7 +50,8 @@ func New() *App {
 
 func (a *App) InitFlags() {
 	a.RootCmd.ResetFlags()
-	a.RootCmd.PersistentFlags().StringVar(&a.Config.CfgFile, "config", "./config.yaml", "target config file")
+	a.RootCmd.PersistentFlags().
+		StringVar(&a.Config.CfgFile, "config", "./config.yaml", "target config file")
 }
 
 func (a *App) PreRunE(cmd *cobra.Command, args []string) error {
@@ -144,7 +145,11 @@ func (a *App) gNMICapabilities() error {
 	log.Println("Get Capabilities request!")
 	cap, err := a.Target.GetCapbilites(a.ctx)
 	if err != nil {
-		return fmt.Errorf("Failed to get Capabilities from target: %s, %v", a.Target.Client.Address, err)
+		return fmt.Errorf(
+			"Failed to get Capabilities from target: %s, %v",
+			a.Target.Client.Address,
+			err,
+		)
 	}
 	msg, _ := protojson.Marshal(cap)
 	output := utils.PrettyJSON(&msg)
@@ -153,9 +158,18 @@ func (a *App) gNMICapabilities() error {
 }
 
 func (a *App) gNMIGet() error {
-	response, err := a.Target.Get(a.ctx, a.Config.GetPath, "JSON") // NXOS only supports JSON for GET/SET
+	response, err := a.Target.Get(
+		a.ctx,
+		a.Config.GetPath,
+		"JSON",
+	) // NXOS only supports JSON for GET/SET
 	if err != nil {
-		return fmt.Errorf("Failed to get path %s from target: %s, %v", a.Target.Config.GetPath, a.Target.Client.Address, err)
+		return fmt.Errorf(
+			"Failed to get path %s from target: %s, %v",
+			a.Target.Config.GetPath,
+			a.Target.Client.Address,
+			err,
+		)
 	}
 	output := new(utils.Output)
 	output.Value = make(map[string]interface{})
@@ -195,7 +209,12 @@ func (a *App) gNMISet(act action.SubOptValue) error {
 	response, err := a.Target.Set(a.ctx, path, &jsonConfig, act)
 
 	if err != nil {
-		return fmt.Errorf("Failed to Set path %s on target: %s, %v", path, a.Target.Client.Address, err)
+		return fmt.Errorf(
+			"Failed to Set path %s on target: %s, %v",
+			path,
+			a.Target.Client.Address,
+			err,
+		)
 	}
 
 	for _, n := range response.GetResponse() {
