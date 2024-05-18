@@ -1,6 +1,6 @@
 # Golang gNMI examples
 
-a golang application to demostrate how to use gNMI to automate Cisco NX-OS
+A golang application to demostrate how to use gNMI to automate Cisco NX-OS
 
 ### Examples of the intput config:
 

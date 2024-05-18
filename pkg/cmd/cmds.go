@@ -32,7 +32,7 @@ func getCmd(a *app.App) *cobra.Command {
 func setMergeCmd(a *app.App) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:          "merge",
-		Short:        "Merge the candidate configuration wtih the configuration on target",
+		Short:        "Merge the candidate configuration wtih the configuration on the target",
 		PreRunE:      a.PreRunE,
 		RunE:         a.RunE,
 		SilenceUsage: true,
@@ -68,7 +68,7 @@ func deleteCmd(a *app.App) *cobra.Command {
 func subCmd(a *app.App) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:          "subscribe",
-		Short:        "run gnmi subscribe on target",
+		Short:        "run gnmi subscribe on the target",
 		PreRunE:      a.PreRunE,
 		RunE:         a.RunE,
 		SilenceUsage: true,
@@ -79,7 +79,7 @@ func subCmd(a *app.App) *cobra.Command {
 func edaCmd(a *app.App) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:          "eda",
-		Short:        "run EDA demo on target",
+		Short:        "Run EDA demo on the target",
 		PreRunE:      a.PreRunE,
 		RunE:         a.RunE,
 		SilenceUsage: true,
