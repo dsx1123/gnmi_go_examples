@@ -16,6 +16,7 @@ const (
 const (
 	Merge SubOptValue = iota + 1
 	Replace
+	Delete
 )
 
 type Action struct {

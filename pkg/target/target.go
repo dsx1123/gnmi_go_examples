@@ -175,10 +175,13 @@ func (t *Target) Set(
 	value *[]byte,
 	opt action.SubOptValue,
 ) (*gnmi.SetResponse, error) {
-	val := &gnmi.TypedValue{
-		Value: &gnmi.TypedValue_JsonVal{
-			JsonVal: *value,
-		},
+	var val *gnmi.TypedValue
+	if opt == action.Merge || opt == action.Replace {
+		val = &gnmi.TypedValue{
+			Value: &gnmi.TypedValue_JsonVal{
+				JsonVal: *value,
+			},
+		}
 	}
 	response, err := t.Client.Set(t.appendMetadata(ctx), path, val, opt)
 	if err != nil {

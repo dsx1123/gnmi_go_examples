@@ -22,6 +22,7 @@ func newRootCmd() *cobra.Command {
 	a.RootCmd.AddCommand(getCmd(a))
 	a.RootCmd.AddCommand(setMergeCmd(a))
 	a.RootCmd.AddCommand(setReplaceCmd(a))
+	a.RootCmd.AddCommand(deleteCmd(a))
 	a.RootCmd.AddCommand(subCmd(a))
 	a.RootCmd.AddCommand(edaCmd(a))
 	return a.RootCmd

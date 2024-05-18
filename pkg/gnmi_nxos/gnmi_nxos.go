@@ -112,6 +112,10 @@ func (c *NXOSGNMIClient) Set(
 		setRequest = &gnmi.SetRequest{
 			Replace: updatePathList,
 		}
+	case action.Delete:
+		setRequest = &gnmi.SetRequest{
+			Delete: []*gnmi.Path{pElem},
+		}
 	}
 	response, err := c.GNMIClient.Set(ctx, setRequest)
 	if err != nil {

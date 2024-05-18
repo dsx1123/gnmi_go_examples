@@ -5,10 +5,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func getCmd(a *app.App) *cobra.Command {
+func capCmd(a *app.App) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:          "get",
-		Short:        "get from target",
+		Use:          "cap",
+		Short:        "Get the gNMI capabilites from the target",
 		PreRunE:      a.PreRunE,
 		RunE:         a.RunE,
 		SilenceUsage: true,
@@ -17,10 +17,10 @@ func getCmd(a *app.App) *cobra.Command {
 
 }
 
-func capCmd(a *app.App) *cobra.Command {
+func getCmd(a *app.App) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:          "cap",
-		Short:        "get gnmi capabilites from target",
+		Use:          "get",
+		Short:        "Get the configuration or operational state from the target",
 		PreRunE:      a.PreRunE,
 		RunE:         a.RunE,
 		SilenceUsage: true,
@@ -32,7 +32,7 @@ func capCmd(a *app.App) *cobra.Command {
 func setMergeCmd(a *app.App) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:          "merge",
-		Short:        "merge the configurations on target",
+		Short:        "Merge the candidate configuration wtih the configuration on target",
 		PreRunE:      a.PreRunE,
 		RunE:         a.RunE,
 		SilenceUsage: true,
@@ -44,7 +44,19 @@ func setMergeCmd(a *app.App) *cobra.Command {
 func setReplaceCmd(a *app.App) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:          "replace",
-		Short:        "replace the configurations on target",
+		Short:        "Replace the configurations on the target",
+		PreRunE:      a.PreRunE,
+		RunE:         a.RunE,
+		SilenceUsage: true,
+	}
+	return cmd
+
+}
+
+func deleteCmd(a *app.App) *cobra.Command {
+	cmd := &cobra.Command{
+		Use:          "delete",
+		Short:        "Delete a conatiner or leaf on the target",
 		PreRunE:      a.PreRunE,
 		RunE:         a.RunE,
 		SilenceUsage: true,

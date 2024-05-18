@@ -130,6 +130,10 @@ func (a *App) RunE(cmd *cobra.Command, args []string) error {
 			log.Fatalf("Read file %s faild", a.Config.SetMerge.JSONFile)
 		}
 		act.Data = &jsonConfig
+	case "delete":
+		act.Opt = action.Set
+		act.SubOpt = action.Delete
+		act.Path = a.Config.DeletePath
 	case "subscribe":
 		act.Opt = action.Subscribe
 		act.Subscrptions = &a.Config.Subscriptions
@@ -194,15 +198,21 @@ func (a *App) gNMIGet() error {
 func (a *App) gNMISet(act action.SubOptValue) error {
 	var path string
 	var file string
+	var jsonConfig []byte
+	var err error
+
 	switch act {
 	case action.Merge:
 		path = a.Config.SetMerge.Path
 		file = a.Config.SetMerge.JSONFile
+		jsonConfig, err = os.ReadFile(file)
 	case action.Replace:
 		path = a.Config.SetReplace.Path
 		file = a.Config.SetReplace.JSONFile
+		jsonConfig, err = os.ReadFile(file)
+	case action.Delete:
+		path = a.Config.DeletePath
 	}
-	jsonConfig, err := os.ReadFile(file)
 	if err != nil {
 		return fmt.Errorf("Read file %s faild", file)
 	}
