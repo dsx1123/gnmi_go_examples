@@ -248,7 +248,7 @@ func GetSubscriptionList(s *config.Subscriptions) ([]*gnmi.Subscription, error) 
 	var subMode gnmi.SubscriptionMode
 	var subscription *gnmi.Subscription
 	for _, sub := range *s {
-		subMode = gnmi.SubscriptionMode(gnmi.SubscriptionMode_value[sub.Mode])
+		subMode = gnmi.SubscriptionMode(gnmi.SubscriptionMode_value[strings.ToUpper(sub.Mode)])
 		_, pElem, err := utils.ParsePath(sub.Path)
 		pElem.Origin = sub.Origin
 		if err != nil {
