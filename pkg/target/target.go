@@ -10,6 +10,7 @@ import (
 	"log"
 	"os"
 	"regexp"
+	"strings"
 
 	"github.com/dsx1123/gnmi_go/pkg/action"
 	"github.com/dsx1123/gnmi_go/pkg/config"
@@ -116,7 +117,6 @@ func (t *Target) receiveNotifications(subscribeClient gnmi.GNMI_SubscribeClient)
 				output.Path = xpath
 				output.Value = make(map[string]interface{})
 				output.Value["val"] = val
-				log.Println(val)
 				mapJson, _ := json.Marshal(output)
 				log.Printf("Get Response: \n %s \n", utils.PrettyJSON(&mapJson))
 			}
@@ -195,7 +195,7 @@ func (t *Target) Subscribe(
 	subscriptions *config.Subscriptions,
 	encoding string,
 ) error {
-	gEncoding := gnmi.Encoding(gnmi.Encoding_value[encoding])
+	gEncoding := gnmi.Encoding(gnmi.Encoding_value[strings.ToUpper(encoding)])
 	gnmiSubs, err := GetSubscriptionList(subscriptions)
 	if err != nil {
 		return err

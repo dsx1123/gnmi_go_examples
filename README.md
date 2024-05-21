@@ -2,7 +2,7 @@
 
 A golang application to demostrate how to use gNMI to automate Cisco NX-OS
 
-### Examples of the intput config:
+## Examples of the intput config
 
 ```yaml
 ---
@@ -25,7 +25,7 @@ subscriptions:
     mode: ON_CHANGE                             # ON_CHANGE, SAMPLE or TARGET_DEFINED
 ```
 
-### How to run the examples:
+## How to run the examples
 
 ```shell
 A demo application of gNMI:

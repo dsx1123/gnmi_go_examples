@@ -12,6 +12,7 @@ import (
 	"google.golang.org/grpc"
 )
 
+// NXOSGNMIClient is a struct wrap of gnmi.GNMIClient
 type NXOSGNMIClient struct {
 	Address       string
 	opts          *[]grpc.DialOption
@@ -103,6 +104,10 @@ func (c *NXOSGNMIClient) Set(
 
 	updatePathList := []*gnmi.Update{updateElem}
 	var setRequest *gnmi.SetRequest
+	// Create a SetRequest based on the action:
+	// - Merge: merge the value to the existing value
+	// - Replace: replace the existing value with the new value
+	// - Delete: delete the existing value
 	switch opt {
 	case action.Merge:
 		setRequest = &gnmi.SetRequest{

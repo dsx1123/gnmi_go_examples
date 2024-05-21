@@ -14,11 +14,13 @@ set:
 replace:
   path: /System/bgp-items
   file: ./config/bgp_items.json
-  #path: /System
-  #file: ./config/system.json
+  # path: /System
+  # file: ./config/system.json
 subscriptions:
   - path: /interfaces/interface/state/oper-status
     mode: ON_CHANGE
-  #- path: /syslog/message
-    #origin: Syslog-oper
-    #mode: ON_CHANGE
+    # mode: SAMPLE
+    # interval: 10
+  # - path: /syslog/message
+  #   origin: Syslog-oper
+  #   mode: ON_CHANGE

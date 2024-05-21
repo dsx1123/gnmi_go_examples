@@ -236,7 +236,6 @@ func (a *App) gNMISet(act action.SubOptValue) error {
 }
 
 func (a *App) gNMISubscribe() error {
-	log.Println("Get Subscribe request!")
 	err := a.Target.Subscribe(a.ctx, &a.Config.Subscriptions, a.Config.Encoding)
 	if err != nil {
 		return err
@@ -248,7 +247,6 @@ func (a *App) gNMIEDA() error {
 	// This is a static demo
 	// Subscribe to Syslog path, when any user change the configuration from CLI
 	// Use gNMI to replace the configuration with Golden Configuration
-	log.Println("Get EDA request!")
 	err := a.Target.EDADemo(a.ctx)
 	if err != nil {
 		return err
