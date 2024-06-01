@@ -1,10 +1,11 @@
 ---
 address: 172.31.186.156:50050
 username: shdu
-password: password
-tls_ca: ca-chain.cert.pem
-tls_cert: user_shdu_chain.cert.pem
-tls_key: user_shdu.key.unenc.pem
+password: ins3965!
+# tls_ca: ca-chain.cert.pem
+# tls_cert: user_shdu_chain.cert.pem
+# tls_key: user_shdu.key.unenc.pem
+insecure_skip_verify: false
 encoding: proto
 get: /interfaces/interface[name=eth1/1]/state
 delete: /System/bgp-items/inst-items/dom-items/Dom-list[name=default]/peer-items/Peer-list[addr=10.10.10.10]

@@ -47,27 +47,22 @@ func New() *Config {
 }
 
 func NewTLSConfig(certFile string, skipTLSVerify bool) (*tls.Config, error) {
-	// read content of config.TLSCA and create TLS config
-	// if config.TLSCA is not empty
-	if certFile == "" {
-		return nil, fmt.Errorf("tls_ca is empty!")
-	}
-
-	// Read the TLS CA file
-	caCert, err := os.ReadFile(certFile)
-	if err != nil {
-		return nil, err
-	}
-
-	caPool := x509.NewCertPool()
-	if !caPool.AppendCertsFromPEM(caCert) {
-		return nil, err
-	}
-
 	tlsConfig := &tls.Config{
 		InsecureSkipVerify: skipTLSVerify,
 	}
-	tlsConfig.RootCAs = caPool
+	if certFile != "" {
+		// Read the TLS CA file
+		caCert, err := os.ReadFile(certFile)
+		if err != nil {
+			return nil, err
+		}
+
+		caPool := x509.NewCertPool()
+		if !caPool.AppendCertsFromPEM(caCert) {
+			return nil, err
+		}
+		tlsConfig.RootCAs = caPool
+	}
 	return tlsConfig, nil
 
 }
