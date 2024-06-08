@@ -1,13 +1,13 @@
 ---
 address: 172.31.186.156:50050
 username: shdu
-password: ins3965!
-# tls_ca: ca-chain.cert.pem
-# tls_cert: user_shdu_chain.cert.pem
-# tls_key: user_shdu.key.unenc.pem
+password: MySecretPassword
+tls_ca: ca-chain.cert.pem
+tls_cert: user_shdu_chain.cert.pem
+tls_key: user_shdu.key.unenc.pem
 insecure_skip_verify: false
 encoding: proto
-get: /interfaces/interface[name=eth1/1]/state
+get: /interfaces/interface/state/oper-status
 delete: /System/bgp-items/inst-items/dom-items/Dom-list[name=default]/peer-items/Peer-list[addr=10.10.10.10]
 set:
   path: /System
@@ -19,9 +19,9 @@ replace:
   # file: ./config/system.json
 subscriptions:
   - path: /interfaces/interface/state/oper-status
-    # mode: on_change
-    mode: sample
-    interval: 10
+    mode: on_change
+    # mode: sample
+    # interval: 10
   # - path: /syslog/message
   #   origin: Syslog-oper
   #   mode: ON_CHANGE
